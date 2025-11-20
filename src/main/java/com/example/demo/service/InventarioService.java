@@ -1,0 +1,111 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.example.demo.model.Inventario;
+import com.example.demo.repository.InventarioRepository;
+import com.example.demo.exception.StockException; // Necesitas crear esta clase (ver nota abajo)
+import com.example.demo.exception.RecursoNoEncontradoException; // Necesitas crear esta clase
+import com.example.demo.repository.ProductoRepository;
+import com.example.demo.repository.TallaRepository;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class InventarioService {
+
+    @Autowired
+    private InventarioRepository inventarioRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+    
+    @Autowired
+    private TallaRepository tallaRepository;
+
+    private static final String MSG_STOCK_INSUFICIENTE = "Stock insuficiente para la variante ID: %d. Stock disponible: %d, Solicitado: %d.";
+
+    @Transactional(readOnly = true) //Validar Stock y Obtener Variante Solo es una lectura
+    public Inventario validarStockYObtenerVariante(Long idInventario, int cantidadSolicitada) 
+        throws RecursoNoEncontradoException, StockException {
+
+        Optional<Inventario> inventarioOpt = inventarioRepository.findById(idInventario);
+
+        if (inventarioOpt.isEmpty()) {
+            throw new RecursoNoEncontradoException("Variante de Inventario no encontrada con ID: " + idInventario);
+        }
+
+        Inventario variante = inventarioOpt.get();
+
+        if (variante.getStock() < cantidadSolicitada) {
+            String mensaje = String.format(MSG_STOCK_INSUFICIENTE, 
+                                           idInventario, 
+                                           variante.getStock(), 
+                                           cantidadSolicitada);
+            throw new StockException(mensaje);
+        }
+
+        return variante;
+    }
+
+    @Transactional
+    public boolean descontarStock(Long idInventario, int cantidadVendida) {
+        
+        int filasActualizadas = inventarioRepository.updateStockForVenta(idInventario, cantidadVendida);
+        
+        if (filasActualizadas == 0) {
+            Inventario variante = inventarioRepository.findById(idInventario)
+                                                      .orElse(null);
+            
+            if (variante != null && variante.getStock() < cantidadVendida) {
+                throw new StockException("Error de concurrencia: El stock se agotó antes de confirmar la venta.");
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
+    public void reponerStock(Long idInventario, int cantidadAReponer) {
+        inventarioRepository.reponerStockPorCancelacion(idInventario, cantidadAReponer);
+    }
+
+    @Transactional(readOnly = true)
+    public Inventario getVarianteById(Long id) {
+        return inventarioRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Variante de Inventario no encontrada con ID: " + id));
+    }
+
+    @Transactional
+    public Inventario saveVariante(Inventario inventario) {
+        if (inventario.getProducto() != null && inventario.getProducto().getId() != null) {
+            productoRepository.findById(inventario.getProducto().getId())
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                    "No se puede guardar la variante. Producto padre no encontrado con ID: " + inventario.getProducto().getId()));
+        } else {
+             throw new RecursoNoEncontradoException("El objeto Inventario debe estar asociado a un Producto.");
+        }
+        if (inventario.getTalla() != null && inventario.getTalla().getId() != null) {
+            tallaRepository.findById(inventario.getTalla().getId())
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                    "No se puede guardar la variante. Talla no encontrada con ID: " + inventario.getTalla().getId()));
+        } else {
+             throw new RecursoNoEncontradoException("El objeto Inventario debe estar asociado a una Talla.");
+        }
+        return inventarioRepository.save(inventario);
+    }
+
+    @Transactional
+    public void deleteVariante(Long id) {
+        if (!inventarioRepository.existsById(id)) {
+            throw new RecursoNoEncontradoException("No se puede eliminar. Variante de Inventario no encontrada con ID: " + id);
+        }
+        inventarioRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Inventario> getVariantesByProductoId(Long productoId) {
+        return inventarioRepository.findByProductoId(productoId); 
+    }
+}
