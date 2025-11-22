@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import lombok.NonNull;
 
 @Service
 public class DetalleVentaService {
@@ -17,17 +18,17 @@ public class DetalleVentaService {
         return detalleVentaRepository.findAll();
     }
 
-    public Optional<DetalleVenta> getDetalleVentaById(Long id) {
-        return detalleVentaRepository.findById(id);
+    public Optional<DetalleVenta> getDetalleVentaById(@NonNull Long idDetalleVenta) {
+        return detalleVentaRepository.findById(idDetalleVenta);
     }
 
-    public DetalleVenta saveDetalleVenta(DetalleVenta detalleVenta) {
+    public DetalleVenta saveDetalleVenta(@NonNull DetalleVenta detalleVenta) {
         return detalleVentaRepository.save(detalleVenta);
     }
 
-        public boolean deleteDetalleVenta(Long id) {
-        if (detalleVentaRepository.existsById(id)){
-            detalleVentaRepository.deleteById(id);
+        public boolean deleteDetalleVenta(@NonNull Long idDetalleVenta) {
+        if (detalleVentaRepository.existsById(idDetalleVenta)){
+            detalleVentaRepository.deleteById(idDetalleVenta);
             return true;
         }
         return false;

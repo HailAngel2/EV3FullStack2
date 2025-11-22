@@ -22,6 +22,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.model.Inventario;
 import com.example.demo.repository.VentaRepository;
 import com.example.demo.repository.UsuarioRepository;
+import lombok.NonNull;
 
 
 @Service
@@ -52,7 +53,7 @@ public class VentaService {
         Venta nuevaVenta = new Venta();
         nuevaVenta.setUsuario(usuario);
         nuevaVenta.setTipoDocumento(ventaDTO.getTipoDocumento());
-        nuevaVenta.setFecha_venta(LocalDate.now());
+        nuevaVenta.setFechaVenta(LocalDate.now());
         nuevaVenta.setFolio(this.generarNuevoFolio());
         
         List<DetalleVenta> detallesVenta = new ArrayList<>();
@@ -107,35 +108,35 @@ public class VentaService {
     }
 
     @Transactional(readOnly = true)
-    public Venta findById(Long id) throws RecursoNoEncontradoException {
-        return ventaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + id));
+    public Venta findById(@NonNull Long idVenta) throws RecursoNoEncontradoException {
+        return ventaRepository.findById(idVenta)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + idVenta));
     }
 
     @Transactional(readOnly = true)
-    public Page<Venta> findAll(Pageable pageable) {
+    public Page<Venta> findAll(@NonNull Pageable pageable) {
         return ventaRepository.findAll(pageable);
     }
 
     @Transactional
-    public void cancelarVenta(Long id) {
-        Venta venta = ventaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + id));
+    public void cancelarVenta(@NonNull Long idVenta) {
+        Venta venta = ventaRepository.findById(idVenta)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + idVenta));
         for (DetalleVenta detalle : venta.getDetalles()) {
-            inventarioService.reponerStock(detalle.getInventario().getId_inventario(), detalle.getCantidad());
+            inventarioService.reponerStock(detalle.getInventario().getIdInventario(), detalle.getCantidad());
         }
         ventaRepository.delete(venta);
     }
 
     @Transactional
-    public Venta actualizarEstadoVenta(Long id, ENUMEstadoVenta nuevoEstado) {
-        Venta venta = ventaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + id));
+    public Venta actualizarEstadoVenta(@NonNull Long idVenta, ENUMEstadoVenta nuevoEstado) {
+        Venta venta = ventaRepository.findById(idVenta)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + idVenta));
         
         if (nuevoEstado == ENUMEstadoVenta.CANCELADA && venta.getEstado() != ENUMEstadoVenta.CANCELADA) {
             
             for (DetalleVenta detalle : venta.getDetalles()) {
-                Long idInventario = detalle.getInventario().getId_inventario();
+                Long idInventario = detalle.getInventario().getIdInventario();
                 inventarioService.reponerStock(idInventario, detalle.getCantidad());
             }
         }
@@ -146,9 +147,9 @@ public class VentaService {
     }
 
     @Transactional
-    public Venta actualizarMetadatosVenta(Long id, VentaPatchDTO patchDTO) {
-        Venta venta = ventaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + id));
+    public Venta actualizarMetadatosVenta(@NonNull Long idVenta, VentaPatchDTO patchDTO) {
+        Venta venta = ventaRepository.findById(idVenta)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + idVenta));
 
         // Aplicar solo si el campo viene en el DTO
         if (patchDTO.getTipoDocumento() != null) {
@@ -156,7 +157,7 @@ public class VentaService {
         }
 
         if (patchDTO.getFechaVenta() != null) {
-            venta.setFecha_venta(patchDTO.getFechaVenta());
+            venta.setFechaVenta(patchDTO.getFechaVenta());
         }
         // No aplicamos ninguna lógica de negocio compleja (como stock o totales) aquí.
         return ventaRepository.save(venta);

@@ -20,10 +20,10 @@ public class Inventario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_inventario;
+    private Long idInventario;
 
     @ManyToOne
-    @JoinColumn(name = "id_producto")
+    @JoinColumn(name = "producto")
     private Producto producto;
 
     @ManyToOne

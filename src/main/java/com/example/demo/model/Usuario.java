@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    private Long idUsuario;
 
     @Column(name = "contrasenaUsuario", length = 100, nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

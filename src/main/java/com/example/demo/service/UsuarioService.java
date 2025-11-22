@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import lombok.NonNull;
 
 @Service
 public class UsuarioService {
@@ -28,23 +29,23 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Usuario getUsuarioById(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado con ID: " + id));
+    public Usuario getUsuarioById(@NonNull Long idUsuario) {
+        return usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado con ID: " + idUsuario));
     }
 
     @Transactional
     public Usuario createOrUpdateUsuario(Usuario usuario) {
-        if (usuario.getComuna() != null && usuario.getComuna().getId_comuna() != null) {
-            comunaRepository.findById(usuario.getComuna().getId_comuna())
+        if (usuario.getComuna() != null && usuario.getComuna().getIdComuna() != null) {
+            comunaRepository.findById(usuario.getComuna().getIdComuna())
                 .orElseThrow(() -> new RecursoNoEncontradoException(
-                    "No se puede guardar el usuario. Comuna no encontrada con ID: " + usuario.getComuna().getId_comuna()));
+                    "No se puede guardar el usuario. Comuna no encontrada con ID: " + usuario.getComuna().getIdComuna()));
         }
 
-        if (usuario.getRegion() != null && usuario.getRegion().getId_region() != null) {
-            regionRepository.findById(usuario.getRegion().getId_region())
+        if (usuario.getRegion() != null && usuario.getRegion().getIdRegion() != null) {
+            regionRepository.findById(usuario.getRegion().getIdRegion())
                 .orElseThrow(() -> new RecursoNoEncontradoException(
-                    "No se puede guardar el usuario. Región no encontrada con ID: " + usuario.getRegion().getId_region()));
+                    "No se puede guardar el usuario. Región no encontrada con ID: " + usuario.getRegion().getIdRegion()));
         }
         
         // **NOTA: Aquí iría la lógica de encriptación de la contraseña antes de guardar.**
@@ -53,8 +54,8 @@ public class UsuarioService {
     }
 
     @Transactional
-    public void deleteUsuario(Long id) {
-        Usuario usuario = getUsuarioById(id);
+    public void deleteUsuario(Long idUsuario) {
+        Usuario usuario = getUsuarioById(idUsuario);
         usuarioRepository.delete(usuario);
     }
 

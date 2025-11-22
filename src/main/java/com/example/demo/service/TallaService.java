@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import lombok.NonNull;
 
 @Service
 public class TallaService {
@@ -20,19 +21,19 @@ public class TallaService {
     }
 
     @Transactional(readOnly = true)
-    public Talla getTallaById(Long id) {
-        return tallaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Talla no encontrada con ID: " + id));
+    public Talla getTallaById(@NonNull Long idTalla) {
+        return tallaRepository.findById(idTalla)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Talla no encontrada con ID: " + idTalla));
     }
 
     @Transactional
-    public Talla createOrUpdateTalla(Talla talla) {
+    public Talla createOrUpdateTalla(@NonNull Talla talla) {
         return tallaRepository.save(talla);
     }
 
     @Transactional
-    public void deleteTalla(Long id) {
-        Talla talla = getTallaById(id);
+    public void deleteTalla(Long idTalla) {
+        Talla talla = getTallaById(idTalla);
         tallaRepository.delete(talla);
     }
 }

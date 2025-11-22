@@ -36,7 +36,7 @@ public class CategoriaController {
     public ResponseEntity<Categoria> update(@PathVariable Long id, @RequestBody Categoria details) {
         categoriaService.getCategoriaById(id); 
         
-        details.setId_categoria(id);
+        details.setIdCategoria(id);
         
         Categoria actualizada = categoriaService.createOrUpdateCategoria(details);
         return ResponseEntity.ok(actualizada);

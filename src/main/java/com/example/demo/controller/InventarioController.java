@@ -26,7 +26,7 @@ public class InventarioController {
         
         Inventario existente = inventarioService.getVarianteById(id);
         
-        varianteDetails.setId_inventario(id); 
+        varianteDetails.setIdInventario(id); 
     
         if (varianteDetails.getProducto() == null) {
             varianteDetails.setProducto(existente.getProducto());

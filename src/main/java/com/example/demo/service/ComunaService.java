@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import lombok.NonNull;
 
 @Service
 public class ComunaService {
@@ -20,19 +21,19 @@ public class ComunaService {
     }
 
     @Transactional(readOnly = true)
-    public Comuna getComunaById(Long id) {
-        return comunaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Comuna no encontrada con ID: " + id));
+    public Comuna getComunaById(@NonNull Long idComuna) {
+        return comunaRepository.findById(idComuna)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Comuna no encontrada con ID: " + idComuna));
     }
 
     @Transactional
-    public Comuna createOrUpdateComuna(Comuna comuna) {
+    public Comuna createOrUpdateComuna(@NonNull Comuna comuna) {
         return comunaRepository.save(comuna);
     }
 
     @Transactional
-    public void deleteComuna(Long id) {
-        Comuna comuna = getComunaById(id);
+    public void deleteComuna(Long idComuna) {
+        Comuna comuna = getComunaById(idComuna);
         comunaRepository.delete(comuna);
     }
 }

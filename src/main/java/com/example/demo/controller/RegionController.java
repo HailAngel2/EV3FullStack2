@@ -36,7 +36,7 @@ public class RegionController {
     public ResponseEntity<Region> update(@PathVariable Long id, @RequestBody Region details) {
         regionService.getRegionById(id); 
         
-        details.setId_region(id);
+        details.setIdRegion(id);
         
         Region actualizada = regionService.createOrUpdateRegion(details);
         return ResponseEntity.ok(actualizada);

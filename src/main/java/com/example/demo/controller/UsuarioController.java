@@ -37,7 +37,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario details) {
         usuarioService.getUsuarioById(id); 
         
-        details.setId_usuario(id);
+        details.setIdUsuario(id);
         
         Usuario actualizado = usuarioService.createOrUpdateUsuario(details);
         return ResponseEntity.ok(actualizado);

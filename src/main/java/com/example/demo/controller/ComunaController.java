@@ -36,7 +36,7 @@ public class ComunaController {
     public ResponseEntity<Comuna> update(@PathVariable Long id, @RequestBody Comuna details) {
         comunaService.getComunaById(id); 
         
-        details.setId_comuna(id);
+        details.setIdComuna(id);
         
         Comuna actualizada = comunaService.createOrUpdateComuna(details);
         return ResponseEntity.ok(actualizada);

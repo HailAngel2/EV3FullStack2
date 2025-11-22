@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Talla{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idTalla;
 
     @Column(unique = true, length = 10)
     private String talla;

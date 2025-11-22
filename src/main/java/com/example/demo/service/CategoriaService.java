@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import lombok.NonNull;
 
 @Service
 public class CategoriaService {
@@ -20,19 +21,19 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
-    public Categoria getCategoriaById(Long id) {
-        return categoriaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con ID: " + id));
+    public Categoria getCategoriaById(@NonNull Long idCategoria) {
+        return categoriaRepository.findById(idCategoria)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con ID: " + idCategoria));
     }
 
     @Transactional
-    public Categoria createOrUpdateCategoria(Categoria categoria) {
+    public Categoria createOrUpdateCategoria(@NonNull Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
     @Transactional
-    public void deleteCategoria(Long id) {
-        Categoria categoria = getCategoriaById(id);
+    public void deleteCategoria(Long idCategoria) {
+        Categoria categoria = getCategoriaById(idCategoria);
         categoriaRepository.delete(categoria);
     }
 }

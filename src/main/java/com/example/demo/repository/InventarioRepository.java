@@ -8,16 +8,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.example.demo.model.Inventario;
 
-public interface InventarioRepository extends JpaRepository<Inventario, Long> {
 
-    Optional<Inventario> findByProductoIdAndTallaTalla(Long productoId, String tallaNombre);
+public interface InventarioRepository extends JpaRepository<Inventario, Long> {
+    Optional<Inventario> findByProductoIdProductoAndTallaTalla(Long idProducto, String talla);
 
     @Modifying
-    @Query("UPDATE Inventario i SET i.stock = i.stock - :cantidad WHERE i.id_inventario = :idInventario AND i.stock >= :cantidad")
+    @Query("UPDATE Inventario i SET i.stock = i.stock - :cantidad WHERE i.idInventario = :idInventario AND i.stock >= :cantidad")
     int updateStockForVenta(@Param("idInventario") Long idInventario, @Param("cantidad") int cantidad);
 
-    List<Inventario> findByProductoId(Long productoId);
+    List<Inventario> findByProductoIdProducto(Long idProducto);
+
     @Modifying
-    @Query("UPDATE Inventario i SET i.stock = i.stock + :cantidad WHERE i.id_inventario = :idInventario")
+    @Query("UPDATE Inventario i SET i.stock = i.stock + :cantidad WHERE i.idInventario = :idInventario")
     int reponerStockPorCancelacion(@Param("idInventario") Long idInventario, @Param("cantidad") int cantidad);
 }

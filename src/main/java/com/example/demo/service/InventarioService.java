@@ -11,6 +11,7 @@ import com.example.demo.repository.ProductoRepository;
 import com.example.demo.repository.TallaRepository;
 import java.util.List;
 import java.util.Optional;
+import lombok.NonNull;
 
 @Service
 public class InventarioService {
@@ -72,24 +73,24 @@ public class InventarioService {
     }
 
     @Transactional(readOnly = true)
-    public Inventario getVarianteById(Long id) {
-        return inventarioRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Variante de Inventario no encontrada con ID: " + id));
+    public Inventario getVarianteById(@NonNull Long idInventario) {
+        return inventarioRepository.findById(idInventario)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Variante de Inventario no encontrada con ID: " + idInventario));
     }
 
     @Transactional
     public Inventario saveVariante(Inventario inventario) {
-        if (inventario.getProducto() != null && inventario.getProducto().getId() != null) {
-            productoRepository.findById(inventario.getProducto().getId())
+        if (inventario.getProducto() != null && inventario.getProducto().getIdProducto() != null) {
+            productoRepository.findById(inventario.getProducto().getIdProducto())
                 .orElseThrow(() -> new RecursoNoEncontradoException(
-                    "No se puede guardar la variante. Producto padre no encontrado con ID: " + inventario.getProducto().getId()));
+                    "No se puede guardar la variante. Producto padre no encontrado con ID: " + inventario.getProducto().getIdProducto()));
         } else {
              throw new RecursoNoEncontradoException("El objeto Inventario debe estar asociado a un Producto.");
         }
-        if (inventario.getTalla() != null && inventario.getTalla().getId() != null) {
-            tallaRepository.findById(inventario.getTalla().getId())
+        if (inventario.getTalla() != null && inventario.getTalla().getIdTalla() != null) {
+            tallaRepository.findById(inventario.getTalla().getIdTalla())
                 .orElseThrow(() -> new RecursoNoEncontradoException(
-                    "No se puede guardar la variante. Talla no encontrada con ID: " + inventario.getTalla().getId()));
+                    "No se puede guardar la variante. Talla no encontrada con ID: " + inventario.getTalla().getIdTalla()));
         } else {
              throw new RecursoNoEncontradoException("El objeto Inventario debe estar asociado a una Talla.");
         }
@@ -97,15 +98,15 @@ public class InventarioService {
     }
 
     @Transactional
-    public void deleteVariante(Long id) {
-        if (!inventarioRepository.existsById(id)) {
-            throw new RecursoNoEncontradoException("No se puede eliminar. Variante de Inventario no encontrada con ID: " + id);
+    public void deleteVariante(Long idInventario) {
+        if (!inventarioRepository.existsById(idInventario)) {
+            throw new RecursoNoEncontradoException("No se puede eliminar. Variante de Inventario no encontrada con ID: " + idInventario);
         }
-        inventarioRepository.deleteById(id);
+        inventarioRepository.deleteById(idInventario);
     }
 
     @Transactional(readOnly = true)
-    public List<Inventario> getVariantesByProductoId(Long productoId) {
-        return inventarioRepository.findByProductoId(productoId); 
+    public List<Inventario> getVariantesByProductoId(Long idProducto) {
+        return inventarioRepository.findByProductoIdProducto(idProducto); 
     }
 }

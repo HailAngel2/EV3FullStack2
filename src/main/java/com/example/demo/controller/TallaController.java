@@ -36,7 +36,7 @@ public class TallaController {
     public ResponseEntity<Talla> update(@PathVariable Long id, @RequestBody Talla details) {
         tallaService.getTallaById(id); 
         
-        details.setId(id);
+        details.setIdTalla(id);
         
         Talla actualizada = tallaService.createOrUpdateTalla(details);
         return ResponseEntity.ok(actualizada);

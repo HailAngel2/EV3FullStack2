@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import lombok.NonNull;
 
 @Service
 public class RegionService {
@@ -20,19 +21,19 @@ public class RegionService {
     }
 
     @Transactional(readOnly = true)
-    public Region getRegionById(Long id) {
-        return regionRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Región no encontrada con ID: " + id));
+    public Region getRegionById(@NonNull Long idRegion) {
+        return regionRepository.findById(idRegion)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Región no encontrada con ID: " + idRegion));
     }
 
     @Transactional
-    public Region createOrUpdateRegion(Region region) {
+    public Region createOrUpdateRegion(@NonNull Region region) {
         return regionRepository.save(region);
     }
 
     @Transactional
-    public void deleteRegion(Long id) {
-        Region region = getRegionById(id);
+    public void deleteRegion(Long idRegion) {
+        Region region = getRegionById(idRegion);
         regionRepository.delete(region);
     }
 }

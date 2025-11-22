@@ -36,7 +36,7 @@ public class MarcaController {
     public ResponseEntity<Marca> update(@PathVariable Long id, @RequestBody Marca details) {
         marcaService.getMarcaById(id); 
         
-        details.setId_marca(id);
+        details.setIdMarca(id);
         
         Marca actualizada = marcaService.createOrUpdateMarca(details);
         return ResponseEntity.ok(actualizada);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import lombok.NonNull;
 
 @Service
 public class MarcaService {
@@ -20,19 +21,19 @@ public class MarcaService {
     }
 
     @Transactional(readOnly = true)
-    public Marca getMarcaById(Long id) {
-        return marcaRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Marca no encontrada con ID: " + id));
+    public Marca getMarcaById(@NonNull Long idMarca) {
+        return marcaRepository.findById(idMarca)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Marca no encontrada con ID: " + idMarca));
     }
 
     @Transactional
-    public Marca createOrUpdateMarca(Marca marca) {
+    public Marca createOrUpdateMarca(@NonNull Marca marca) {
         return marcaRepository.save(marca);
     }
 
     @Transactional
-    public void deleteMarca(Long id) {
-        Marca marca = getMarcaById(id);
+    public void deleteMarca(Long idMarca) {
+        Marca marca = getMarcaById(idMarca);
         marcaRepository.delete(marca);
     }
 }

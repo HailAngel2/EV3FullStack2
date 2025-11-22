@@ -20,16 +20,16 @@ public class Producto{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long idProducto;
 
     @Column(name = "nombreProducto", length = 50,  nullable = false)
     private String nombreProducto;
 
     @ManyToOne 
-    @JoinColumn(name = "id_marca", nullable = true)
+    @JoinColumn(name = "id_marca", nullable = false)
     private Marca marca;
 
     @ManyToOne 
-    @JoinColumn(name = "id_categoria", nullable = true)
+    @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
 }

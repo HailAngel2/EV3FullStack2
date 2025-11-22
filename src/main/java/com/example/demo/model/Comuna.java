@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Comuna{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_comuna;
+    private Long idComuna;
 
     @Column(name = "comuna", length = 50, unique = true, nullable = false)
     private String comuna;

@@ -22,15 +22,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 public class Venta {
 
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_venta;
+    private Long idVenta;
 
     @Column(name = "fechaVenta")
-    private LocalDate fecha_venta;
+    private LocalDate fechaVenta;
 
     @Column(unique = true)
     private Long folio; // El número legal de la boleta (ej:0001)
