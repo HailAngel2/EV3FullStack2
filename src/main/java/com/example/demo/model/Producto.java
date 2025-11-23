@@ -32,4 +32,7 @@ public class Producto{
     @ManyToOne 
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
+
+    @Column(name = "urlImagen", length = 512, nullable = true)
+    private String urlImagen;
 }
