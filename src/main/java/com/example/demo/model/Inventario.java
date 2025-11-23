@@ -27,12 +27,12 @@ public class Inventario{
     private Producto producto;
 
     @ManyToOne
-    @JoinColumn(name = "id_talla")
+    @JoinColumn(name = "idTalla")
     private Talla talla;
 
     @Column(name = "stock")
     private int stock;
 
-    @Column(name = "precio_unitario")
+    @Column(name = "precioUnitario")
     private double precioUnitario;
 }
