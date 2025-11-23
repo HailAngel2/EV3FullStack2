@@ -109,4 +109,9 @@ public class InventarioService {
     public List<Inventario> getVariantesByProductoId(Long idProducto) {
         return inventarioRepository.findByProductoIdProducto(idProducto); 
     }
+
+    @Transactional(readOnly = true)
+    public List<Inventario> getAllVariantes() {
+        return inventarioRepository.findAll();
+    }
 }

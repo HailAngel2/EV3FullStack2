@@ -40,6 +40,11 @@ public class InventarioController {
         return ResponseEntity.ok(actualizada);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Inventario>> getAll() {
+        return ResponseEntity.ok(inventarioService.getAllVariantes());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Inventario> getVarianteById(@PathVariable Long id) {
         Inventario variante = inventarioService.getVarianteById(id);
