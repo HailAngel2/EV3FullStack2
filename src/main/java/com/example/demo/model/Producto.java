@@ -26,11 +26,11 @@ public class Producto{
     private String nombreProducto;
 
     @ManyToOne 
-    @JoinColumn(name = "id_marca", nullable = false)
+    @JoinColumn(name = "idMarca", nullable = false)
     private Marca marca;
 
     @ManyToOne 
-    @JoinColumn(name = "id_categoria", nullable = false)
+    @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
     @Column(name = "urlImagen", length = 512, nullable = true)
