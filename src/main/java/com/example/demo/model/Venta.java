@@ -12,8 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import jakarta.persistence.EnumType;
@@ -46,6 +45,7 @@ public class Venta {
     @ManyToOne
     @JoinColumn(name = "idUsuario")
     @JsonBackReference
+    @JsonIgnore
     private Usuario usuario;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
