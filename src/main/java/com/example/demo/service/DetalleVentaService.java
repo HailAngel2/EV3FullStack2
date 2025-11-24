@@ -22,15 +22,4 @@ public class DetalleVentaService {
         return detalleVentaRepository.findById(idDetalleVenta);
     }
 
-    public DetalleVenta saveDetalleVenta(@NonNull DetalleVenta detalleVenta) {
-        return detalleVentaRepository.save(detalleVenta);
-    }
-
-        public boolean deleteDetalleVenta(@NonNull Long idDetalleVenta) {
-        if (detalleVentaRepository.existsById(idDetalleVenta)){
-            detalleVentaRepository.deleteById(idDetalleVenta);
-            return true;
-        }
-        return false;
-    }
 }

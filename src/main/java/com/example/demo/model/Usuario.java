@@ -9,8 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -45,7 +45,7 @@ public class Usuario{
     private String apmaterno;
 
     @OneToMany(mappedBy = "usuario")
-    @JsonIgnore
+    @JsonManagedReference
     private List<Venta> ventas;
     
     @Enumerated(EnumType.STRING)

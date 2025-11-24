@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 public class Inventario{
 
     @Id
@@ -24,6 +27,7 @@ public class Inventario{
 
     @ManyToOne
     @JoinColumn(name = "producto")
+    @JsonIgnore
     private Producto producto;
 
     @ManyToOne
