@@ -40,7 +40,7 @@ public class Venta {
     private ENUMTipoDocumento tipoDocumento;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)

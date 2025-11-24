@@ -109,9 +109,8 @@ public class VentaService {
 
     @Transactional(readOnly = true)
     public Venta findById(@NonNull Long idVenta) throws RecursoNoEncontradoException {
-        return ventaRepository.findById(idVenta)
-                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + idVenta));
-    }
+        return ventaRepository.findByIdWithDetalles(idVenta) 
+            .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada con ID: " + idVenta));    }
 
     @Transactional(readOnly = true)
     public Page<Venta> findAll(@NonNull Pageable pageable) {
