@@ -34,17 +34,8 @@ public class Usuario{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasena;
 
-    @Column(name = "pnombre", length = 50, nullable = true)
-    private String pnombre;
-
-    @Column(name = "snombre", length = 50, nullable = false)
-    private String snombre;
-
-    @Column(name = "appaterno", length = 50, nullable = false)
-    private String appaterno;
-
-    @Column(name = "apmaterno", length = 50, nullable = false)
-    private String apmaterno;
+    @Column(name = "username", length = 50, nullable = false)
+    private String username;
 
     @OneToMany(mappedBy = "usuario")
     @JsonManagedReference
