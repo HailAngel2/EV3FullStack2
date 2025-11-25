@@ -26,7 +26,7 @@ public class Inventario{
     private Long idInventario;
 
     @ManyToOne
-    @JoinColumn(name = "producto")
+    @JoinColumn(name = "idProducto")
     @JsonIgnore
     private Producto producto;
 
