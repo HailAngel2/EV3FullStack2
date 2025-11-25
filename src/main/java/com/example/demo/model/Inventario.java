@@ -27,7 +27,6 @@ public class Inventario{
 
     @ManyToOne
     @JoinColumn(name = "idProducto")
-    @JsonIgnore
     private Producto producto;
 
     @ManyToOne
