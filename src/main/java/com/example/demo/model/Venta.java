@@ -19,12 +19,16 @@ import jakarta.persistence.EnumType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString(exclude = {"usuario", "detalles"})
+@EqualsAndHashCode(callSuper = false, exclude = {"usuario", "detalles"})
 
 public class Venta {
 

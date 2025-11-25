@@ -1,4 +1,6 @@
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\config\CorsConfig.java
+C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\config\SecurityConfig.java
+C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\controller\AuthController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\controller\CategoriaController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\controller\ComunaController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\controller\DetalleVentaController.java
@@ -12,6 +14,8 @@ C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\controller\VentaController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\DemoApplication.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\dto\DetalleVentaDTO.java
+C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\dto\LoginRequestDTO.java
+C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\dto\RegistroRequestDTO.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\dto\VentaPatchDTO.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\dto\VentaRequestDTO.java
 C:\Users\hydra\Downloads\EV3FullStack2-main1.1\EV3FullStack2-main\src\main\java\com\example\demo\dto\VentaUpdateEstadoDTO.java
