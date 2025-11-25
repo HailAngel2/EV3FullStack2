@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDate;
 import jakarta.persistence.EnumType;
@@ -53,6 +54,7 @@ public class Venta {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<DetalleVenta> detalles; 
 
     @Enumerated(EnumType.STRING)
