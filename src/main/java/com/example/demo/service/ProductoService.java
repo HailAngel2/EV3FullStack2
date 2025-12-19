@@ -29,6 +29,7 @@ public class ProductoService {
     
     @Transactional
     public Producto registrarProducto(ProductoRequestDTO dto) {
+        System.out.println(dto);
         Producto producto = new Producto();
         
         producto.setNombreProducto(dto.getNombreProducto());
