@@ -41,9 +41,9 @@ public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> create(@RequestBody RegistroRequestDTO registroDTO) {
+    public ResponseEntity<UsuarioResponseDTO> create(@RequestBody RegistroRequestDTO registroDTO) {
         Usuario nuevoUsuario = usuarioService.registrarUsuario(registroDTO);
-        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+        return new ResponseEntity<>(usuarioService.convertirADto(nuevoUsuario), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

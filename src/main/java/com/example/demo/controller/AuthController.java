@@ -6,6 +6,7 @@ import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.exception.RecursoNoEncontradoException;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,23 +32,18 @@ public class AuthController {
     
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequestDTO loginRequest) {
-        Usuario usuario = usuarioRepository.findByUsername(loginRequest.getUsername())
-            .orElseThrow(() -> new RecursoNoEncontradoException("Credenciales inválidas.")); // Error 404/401
-
-        boolean matches = passwordEncoder.matches(
-            loginRequest.getContrasena(), 
-            usuario.getContrasena()
-        );
-
-        if (matches) {
+        Optional<Usuario> oUsuario = usuarioRepository.findByUsername(loginRequest.getUsername());
+        if (oUsuario.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+        }
+        Usuario usuario = oUsuario.get();
+        if (passwordEncoder.matches(loginRequest.getContrasena(), usuario.getContrasena())) {
             return ResponseEntity.ok(Map.of(
-                "message", "Login exitoso",
                 "id", usuario.getIdUsuario(),
                 "username", usuario.getUsername(),
-                "rol", usuario.getRol().toString()
+                "rol", usuario.getRol().name()
             ));
-        } else {
-            return new ResponseEntity<>("Credenciales inválidas.", HttpStatus.UNAUTHORIZED);
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
     }
 }
