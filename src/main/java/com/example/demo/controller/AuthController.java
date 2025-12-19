@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
-import com.example.demo.exception.RecursoNoEncontradoException;
 
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +29,7 @@ public class AuthController {
     
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequestDTO loginRequest) {
-        Optional<Usuario> oUsuario = usuarioRepository.findByUsername(loginRequest.getUsername());
+        Optional<Usuario> oUsuario = usuarioRepository.findByCorreo(loginRequest.getCorreo());
         if (oUsuario.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
         }
@@ -38,7 +37,7 @@ public class AuthController {
         if (passwordEncoder.matches(loginRequest.getContrasena(), usuario.getContrasena())) {
             return ResponseEntity.ok(Map.of(
                 "id", usuario.getIdUsuario(),
-                "username", usuario.getUsername(),
+                "username", usuario.getCorreo(),
                 "rol", usuario.getRol().name()
             ));
         }
