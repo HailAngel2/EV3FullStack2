@@ -33,8 +33,11 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public List<Usuario> getAllUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> getAllUsuarios() {
+        return usuarioRepository.findAll()
+                .stream()
+                .map(this::convertirADto)
+                .toList();
     }
 
     @Transactional(readOnly = true)
