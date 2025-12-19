@@ -13,6 +13,7 @@ com\example\demo\controller\AuthController.class
 com\example\demo\repository\ComunaRepository.class
 com\example\demo\service\VentaService.class
 com\example\demo\service\TallaService.class
+com\example\demo\dto\ProductoRequestDTO.class
 com\example\demo\model\ENUMRolUsuario.class
 com\example\demo\controller\CategoriaController.class
 com\example\demo\model\Venta.class
