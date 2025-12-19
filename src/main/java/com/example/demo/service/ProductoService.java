@@ -1,11 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Categoria;
+import com.example.demo.model.ENUMCategoria;
 import com.example.demo.model.Marca;
 import com.example.demo.model.Producto;
 import com.example.demo.repository.ProductoRepository;
 import com.example.demo.repository.MarcaRepository;
-import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.dto.ProductoRequestDTO;
 import com.example.demo.exception.RecursoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,6 @@ public class ProductoService {
     @Autowired
     private MarcaRepository marcaRepository;
     
-    @Autowired
-    private CategoriaRepository categoriaRepository;
     
     @Transactional
     public Producto registrarProducto(ProductoRequestDTO dto) {
@@ -34,18 +31,14 @@ public class ProductoService {
         
         producto.setNombreProducto(dto.getNombreProducto());
         producto.setUrlImagen(dto.getUrlImagen());
+        producto.setCategoria(dto.getCategoria());
 
         if (dto.getIdMarca() != null) {
             Marca marca = marcaRepository.findById(dto.getIdMarca())
                 .orElseThrow(() -> new RecursoNoEncontradoException("Marca no encontrada con ID: " + dto.getIdMarca()));
             producto.setMarca(marca);
         }
-
-        if (dto.getIdCategoria() != null) {
-            Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
-                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con ID: " + dto.getIdCategoria()));
-            producto.setCategoria(categoria);
-        }
+        
 
         return productoRepository.save(producto);
     }
@@ -56,15 +49,11 @@ public class ProductoService {
             .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado con ID: " + id));
         productoExistente.setNombreProducto(dto.getNombreProducto());
         productoExistente.setUrlImagen(dto.getUrlImagen());
+        productoExistente.setCategoria(dto.getCategoria());
         if (dto.getIdMarca() != null) {
             Marca marca = marcaRepository.findById(dto.getIdMarca())
                 .orElseThrow(() -> new RecursoNoEncontradoException("Marca no encontrada con ID: " + dto.getIdMarca()));
             productoExistente.setMarca(marca);
-        }
-        if (dto.getIdCategoria() != null) {
-            Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
-                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con ID: " + dto.getIdCategoria()));
-            productoExistente.setCategoria(categoria);
         }
         return productoRepository.save(productoExistente);
     }
@@ -98,6 +87,6 @@ public class ProductoService {
 
     @Transactional(readOnly = true)
     public List<Producto> findByCategoria(String nombreCategoria) {
-        return productoRepository.findByCategoriaNombreCategoria(nombreCategoria);
+        return productoRepository.findByCategoria(ENUMCategoria.valueOf(nombreCategoria));
     }
 }

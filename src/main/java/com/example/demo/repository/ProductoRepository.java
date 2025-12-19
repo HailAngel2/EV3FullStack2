@@ -2,11 +2,13 @@ package com.example.demo.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.demo.model.ENUMCategoria;
 import com.example.demo.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
     List<Producto> findByNombreProductoContainingIgnoreCase(String nombreProducto);
     List<Producto> findByMarcaNombreMarca(String nombreMarca);
-    List<Producto> findByCategoriaNombreCategoria(String nombreCategoria);
+    List<Producto> findByCategoria(ENUMCategoria categoria);
 }

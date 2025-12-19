@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,9 +31,9 @@ public class Producto{
     @JoinColumn(name = "idMarca", nullable = false)
     private Marca marca;
 
-    @ManyToOne 
-    @JoinColumn(name = "idCategoria", nullable = false)
-    private Categoria categoria;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ENUMCategoria categoria;
 
     @Column(name = "urlImagen", length = 512, nullable = true)
     private String urlImagen;

@@ -1,7 +1,6 @@
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\config\CorsConfig.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\config\SecurityConfig.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\controller\AuthController.java
-C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\controller\CategoriaController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\controller\ComunaController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\controller\DetalleVentaController.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\controller\HealthCheckController.java
@@ -24,11 +23,12 @@ C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\dto\V
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\exception\GlobalExceptionHandler.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\exception\RecursoNoEncontradoException.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\exception\StockException.java
-C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Categoria.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Comuna.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\DetalleVenta.java
+C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\ENUMCategoria.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\ENUMEstadoVenta.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\ENUMRolUsuario.java
+C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\ENUMTalla.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\ENUMTipoDocumento.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Inventario.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Marca.java
@@ -37,7 +37,6 @@ C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Talla.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Usuario.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\model\Venta.java
-C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\CategoriaRepository.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\ComunaRepository.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\DetalleVentaRepository.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\InventarioRepository.java
@@ -47,7 +46,6 @@ C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repos
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\TallaRepository.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\UsuarioRepository.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\repository\VentaRepository.java
-C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\service\CategoriaService.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\service\ComunaService.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\service\DetalleVentaService.java
 C:\Users\hydra\Downloads\EV3FullStack2-main\src\main\java\com\example\demo\service\InventarioService.java
