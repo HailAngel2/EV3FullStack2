@@ -18,7 +18,7 @@ public class Comuna{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idComuna;
-
+ //a
     @Column(name = "comuna", length = 50, unique = true, nullable = false)
     private String comuna;
     
