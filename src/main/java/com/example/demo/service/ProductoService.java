@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Categoria;
+import com.example.demo.model.Marca;
 import com.example.demo.model.Producto;
 import com.example.demo.repository.ProductoRepository;
 import com.example.demo.repository.MarcaRepository;
 import com.example.demo.repository.CategoriaRepository;
+import com.example.demo.dto.ProductoRequestDTO;
 import com.example.demo.exception.RecursoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,23 +28,44 @@ public class ProductoService {
     private CategoriaRepository categoriaRepository;
     
     @Transactional
-    public Producto createOrUpdateProducto(Producto producto) {
+    public Producto registrarProducto(ProductoRequestDTO dto) {
+        Producto producto = new Producto();
         
-        // 1. Validar existencia de la Marca
-        if (producto.getMarca() != null && producto.getMarca().getIdMarca() != null) {
-            marcaRepository.findById(producto.getMarca().getIdMarca())
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                    "No se puede guardar el producto. Marca no encontrada con ID: " + producto.getMarca().getIdMarca()));
+        producto.setNombreProducto(dto.getNombreProducto());
+        producto.setUrlImagen(dto.getUrlImagen());
+
+        if (dto.getIdMarca() != null) {
+            Marca marca = marcaRepository.findById(dto.getIdMarca())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Marca no encontrada con ID: " + dto.getIdMarca()));
+            producto.setMarca(marca);
         }
 
-        // 2. Validar existencia de la Categoría
-        if (producto.getCategoria() != null && producto.getCategoria().getIdCategoria() != null) {
-            categoriaRepository.findById(producto.getCategoria().getIdCategoria())
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                    "No se puede guardar el producto. Categoría no encontrada con ID: " + producto.getCategoria().getIdCategoria()));
+        if (dto.getIdCategoria() != null) {
+            Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con ID: " + dto.getIdCategoria()));
+            producto.setCategoria(categoria);
         }
-        
+
         return productoRepository.save(producto);
+    }
+
+    @Transactional
+    public Producto actualizarProducto(Long id, ProductoRequestDTO dto) {
+        Producto productoExistente = productoRepository.findById(id)
+            .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado con ID: " + id));
+        productoExistente.setNombreProducto(dto.getNombreProducto());
+        productoExistente.setUrlImagen(dto.getUrlImagen());
+        if (dto.getIdMarca() != null) {
+            Marca marca = marcaRepository.findById(dto.getIdMarca())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Marca no encontrada con ID: " + dto.getIdMarca()));
+            productoExistente.setMarca(marca);
+        }
+        if (dto.getIdCategoria() != null) {
+            Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con ID: " + dto.getIdCategoria()));
+            productoExistente.setCategoria(categoria);
+        }
+        return productoRepository.save(productoExistente);
     }
 
     @Transactional(readOnly = true)

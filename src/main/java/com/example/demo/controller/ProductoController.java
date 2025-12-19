@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProductoRequestDTO;
 import com.example.demo.model.Producto;
 import com.example.demo.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +39,14 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<Producto> create(@RequestBody Producto entity) {
-        Producto nuevoProducto = productoService.createOrUpdateProducto(entity);
+    public ResponseEntity<Producto> create(@RequestBody ProductoRequestDTO productoDTO) {
+        Producto nuevoProducto = productoService.registrarProducto(productoDTO);
         return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> update(@PathVariable Long id, @RequestBody Producto details) {
-        productoService.getProductoById(id); 
-        
-        details.setIdProducto(id);
-        
-        Producto actualizado = productoService.createOrUpdateProducto(details);
+    public ResponseEntity<Producto> update(@PathVariable Long id, @RequestBody ProductoRequestDTO dto) {
+        Producto actualizado = productoService.actualizarProducto(id, dto);
         return ResponseEntity.ok(actualizado);
     }
 
