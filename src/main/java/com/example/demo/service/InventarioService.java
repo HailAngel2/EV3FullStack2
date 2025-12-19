@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.Inventario;
+import com.example.demo.model.Producto;
+import com.example.demo.model.Talla;
 import com.example.demo.repository.InventarioRepository;
 import com.example.demo.exception.StockException;
+import com.example.demo.dto.InventarioRequestDTO;
 import com.example.demo.exception.RecursoNoEncontradoException;
 import com.example.demo.repository.ProductoRepository;
 import com.example.demo.repository.TallaRepository;
@@ -78,25 +81,24 @@ public class InventarioService {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Variante de Inventario no encontrada con ID: " + idInventario));
     }
 
-@Transactional
-public Inventario saveVariante(Inventario inventario) {
-    
-    if (inventario.getProducto() == null || inventario.getProducto().getIdProducto() == null) {
-        throw new RecursoNoEncontradoException("El objeto Inventario debe estar asociado a un Producto.");
-    }
-    productoRepository.findById(inventario.getProducto().getIdProducto())
-        .orElseThrow(() -> new RecursoNoEncontradoException(
-            "No se puede guardar la variante. Producto padre no encontrado con ID: " + inventario.getProducto().getIdProducto()));
 
-    if (inventario.getTalla() == null || inventario.getTalla().getIdTalla() == null) {
-        throw new RecursoNoEncontradoException("El objeto Inventario debe estar asociado a una Talla.");
-    }
-    tallaRepository.findById(inventario.getTalla().getIdTalla())
-        .orElseThrow(() -> new RecursoNoEncontradoException(
-            "No se puede guardar la variante. Talla no encontrada con ID: " + inventario.getTalla().getIdTalla()));
+    @Transactional
+    public Inventario saveVariante(InventarioRequestDTO dto) {
+        Producto producto = productoRepository.findById(dto.getIdProducto())
+            .orElseThrow(() -> new RecursoNoEncontradoException(
+                "No se pudo crear la variante: Producto ID " + dto.getIdProducto() + " no existe."));
 
-    return inventarioRepository.save(inventario);
-}
+        Talla talla = tallaRepository.findById(dto.getIdTalla())
+            .orElseThrow(() -> new RecursoNoEncontradoException(
+                "No se pudo crear la variante: Talla ID " + dto.getIdTalla() + " no existe."));
+        Inventario inventario = new Inventario();
+        inventario.setProducto(producto);
+        inventario.setTalla(talla);
+        inventario.setStock(dto.getStock());
+        inventario.setPrecioUnitario(dto.getPrecioUnitario());
+
+        return inventarioRepository.save(inventario);
+    }
 
     @Transactional
     public void deleteVariante(Long idInventario) {
@@ -114,5 +116,20 @@ public Inventario saveVariante(Inventario inventario) {
     @Transactional(readOnly = true)
     public List<Inventario> getAllVariantes() {
         return inventarioRepository.findAll();
+    }
+
+    @Transactional
+    public Inventario actualizarVariante(Long idInventario, InventarioRequestDTO dto) {
+        Inventario inventarioExistente = inventarioRepository.findById(idInventario)
+            .orElseThrow(() -> new RecursoNoEncontradoException("Inventario no encontrado con ID: " + idInventario));
+        Producto producto = productoRepository.findById(dto.getIdProducto())
+            .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado con ID: " + dto.getIdProducto()));
+        inventarioExistente.setProducto(producto);
+        Talla talla = tallaRepository.findById(dto.getIdTalla())
+            .orElseThrow(() -> new RecursoNoEncontradoException("Talla no encontrada con ID: " + dto.getIdTalla()));
+        inventarioExistente.setTalla(talla);
+        inventarioExistente.setStock(dto.getStock());
+        inventarioExistente.setPrecioUnitario(dto.getPrecioUnitario());
+        return inventarioRepository.save(inventarioExistente);
     }
 }

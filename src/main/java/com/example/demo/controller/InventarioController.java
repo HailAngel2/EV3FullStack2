@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.InventarioRequestDTO;
 import com.example.demo.model.Inventario;
 import com.example.demo.service.InventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +26,16 @@ public class InventarioController {
     private InventarioService inventarioService;
 
     @PostMapping
-    public ResponseEntity<Inventario> createVariante(@RequestBody Inventario variante) {
-        Inventario nuevaVariante = inventarioService.saveVariante(variante);
+    public ResponseEntity<Inventario> create(@RequestBody InventarioRequestDTO dto) {
+        Inventario nuevaVariante = inventarioService.saveVariante(dto);
         return new ResponseEntity<>(nuevaVariante, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<Inventario> updateVariante(@PathVariable Long id, @RequestBody Inventario varianteDetails) {
-        
-        Inventario existente = inventarioService.getVarianteById(id);
-        
-        varianteDetails.setIdInventario(id); 
-    
-        if (varianteDetails.getProducto() == null) {
-            varianteDetails.setProducto(existente.getProducto());
-        }
-        if (varianteDetails.getTalla() == null) {
-            varianteDetails.setTalla(existente.getTalla());
-        }
-        
-        Inventario actualizada = inventarioService.saveVariante(varianteDetails);
-        
-        return ResponseEntity.ok(actualizada);
+    public ResponseEntity<Inventario> update(@PathVariable Long id, @RequestBody InventarioRequestDTO dto) {
+        Inventario actualizado = inventarioService.actualizarVariante(id, dto);
+        return ResponseEntity.ok(actualizado);
     }
 
     @GetMapping

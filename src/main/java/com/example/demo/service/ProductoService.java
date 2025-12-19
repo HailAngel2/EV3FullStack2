@@ -84,7 +84,7 @@ public class ProductoService {
     public List<Producto> findByMarca(String nombreMarca) {
         return productoRepository.findByMarcaNombreMarca(nombreMarca);
     }
-    // a ver si funciona
+    
     @Transactional(readOnly = true)
     public List<Producto> findByCategoria(String nombreCategoria) {
         return productoRepository.findByCategoria(ENUMCategoria.valueOf(nombreCategoria));
